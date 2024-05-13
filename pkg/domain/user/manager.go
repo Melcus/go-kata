@@ -1,21 +1,21 @@
 package user
 
-type Manager struct {
+type manager struct {
 	repo userRepository
 }
 
-func NewUserManager(repo userRepository) *Manager {
-	return &Manager{repo: repo}
+func newUserManager(repo userRepository) *manager {
+	return &manager{repo: repo}
 }
 
-func (manager *Manager) createUser(u user) (publicUser, error) {
+func (manager *manager) createUser(u user) (publicUser, error) {
 	return manager.repo.createUser(u)
 }
 
-func (manager *Manager) findUserByEmail(email string) (*publicUser, error) {
+func (manager *manager) findUserByEmail(email string) (*publicUser, error) {
 	return manager.repo.findUserByEmail(email)
 }
 
-func (manager *Manager) listUsers() ([]*publicUser, error) {
+func (manager *manager) listUsers() ([]*publicUser, error) {
 	return manager.repo.listUsers()
 }

@@ -12,7 +12,7 @@ func loadRoutes(app *kernel.Application, provider *provider) {
 }
 
 func (provider *provider) handleGetUsers(app *kernel.Application) http.HandlerFunc {
-	manager := NewUserManager(provider.repo)
+	manager := newUserManager(provider.repo)
 
 	return func(writer http.ResponseWriter, request *http.Request) {
 		publicUsers, err := manager.listUsers()
@@ -27,7 +27,7 @@ func (provider *provider) handleGetUsers(app *kernel.Application) http.HandlerFu
 }
 
 func (provider *provider) handleCreateUser(app *kernel.Application) http.HandlerFunc {
-	manager := NewUserManager(provider.repo)
+	manager := newUserManager(provider.repo)
 
 	return func(writer http.ResponseWriter, request *http.Request) {
 		parseFormError := request.ParseForm()
@@ -42,10 +42,10 @@ func (provider *provider) handleCreateUser(app *kernel.Application) http.Handler
 		// password validation
 
 		user := newUserBuilder().
-			SetName(request.Form.Get("name")).
-			SetEmail(request.Form.Get("email")).
-			SetPassword(request.Form.Get("password")). // TODO: encrypt password
-			Build()
+			setName(request.Form.Get("name")).
+			setEmail(request.Form.Get("email")).
+			setPassword(request.Form.Get("password")). // TODO: encrypt password
+			build()
 
 		publicUser, createUserErr := manager.createUser(*user)
 
@@ -59,7 +59,7 @@ func (provider *provider) handleCreateUser(app *kernel.Application) http.Handler
 }
 
 func (provider *provider) handleFindUser(app *kernel.Application) http.HandlerFunc {
-	manager := NewUserManager(provider.repo)
+	manager := newUserManager(provider.repo)
 
 	return func(writer http.ResponseWriter, request *http.Request) {
 		email := request.PathValue("email")

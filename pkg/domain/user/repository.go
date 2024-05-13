@@ -6,15 +6,15 @@ type userRepository interface {
 	listUsers() ([]*publicUser, error)
 }
 
-type MockUserRepository struct {
+type mockUserRepository struct {
 	users []user
 }
 
-func NewMockUserRepository() *MockUserRepository {
-	return &MockUserRepository{}
+func newMockUserRepository() *mockUserRepository {
+	return &mockUserRepository{}
 }
 
-func (repo *MockUserRepository) createUser(u user) (publicUser, error) {
+func (repo *mockUserRepository) createUser(u user) (publicUser, error) {
 	repo.users = append(repo.users, u)
 
 	return publicUser{
@@ -23,7 +23,7 @@ func (repo *MockUserRepository) createUser(u user) (publicUser, error) {
 	}, nil
 }
 
-func (repo *MockUserRepository) findUserByEmail(email string) (*publicUser, error) {
+func (repo *mockUserRepository) findUserByEmail(email string) (*publicUser, error) {
 	for _, user := range repo.users {
 		if user.Email == email {
 			return &publicUser{
@@ -35,7 +35,7 @@ func (repo *MockUserRepository) findUserByEmail(email string) (*publicUser, erro
 	return nil, nil
 }
 
-func (repo *MockUserRepository) listUsers() ([]*publicUser, error) {
+func (repo *mockUserRepository) listUsers() ([]*publicUser, error) {
 	publicUsers := make([]*publicUser, 0, len(repo.users))
 
 	for _, user := range repo.users {

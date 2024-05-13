@@ -8,7 +8,7 @@ type provider struct {
 
 func InitDomain(app *kernel.Application) {
 	provider := &provider{
-		repo: NewMockUserRepository(),
+		repo: newMockUserRepository(),
 	}
 
 	loadRoutes(app, provider)
